@@ -1,0 +1,129 @@
+name: Isolated Charter Pages publication template
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  freeze:
+    if: ${{ false }}
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    outputs:
+      payload: ${{ steps.freeze.outputs.frozen_release_json }}
+      digest: ${{ steps.freeze.outputs.frozen_release_sha256 }}
+      site_commit: ${{ steps.freeze.outputs.approved_site_commit }}
+      verifier_sha256: ${{ steps.freeze.outputs.approved_verifier_sha256 }}
+      freezer_sha256: ${{ steps.freeze.outputs.approved_freezer_sha256 }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # locally inspected v7 pin; verify owner/version before activation
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+      - id: site
+        name: Record the control checkout commit
+        run: echo "sha=$(git -C control rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Verify approved helpers before freezing
+        env:
+          BOOTSTRAP_CHECKOUT: control
+          APPROVED_VERIFIER_SHA256: ${{ vars.TRUSTED_VERIFIER_SHA256 }}
+          APPROVED_FREEZER_SHA256: ${{ vars.TRUSTED_FREEZER_SHA256 }}
+        run: >-
+          python -B -c 'import hashlib,os,pathlib,re,stat,sys; root=pathlib.Path(os.environ["BOOTSTRAP_CHECKOUT"]); checks=((".github/scripts/verify_release.py","APPROVED_VERIFIER_SHA256"),(".github/scripts/freeze_release.py","APPROVED_FREEZER_SHA256")); regular=lambda p: stat.S_ISREG(p.lstat().st_mode) if p.exists() or p.is_symlink() else False; ok=all(re.fullmatch(r"[0-9a-f]{64}",os.environ.get(key,"")) is not None and regular(root/name) and hashlib.sha256((root/name).read_bytes()).hexdigest()==os.environ.get(key) for name,key in checks); sys.exit(0 if ok else "release helper bytes do not match independently approved hashes")'
+      - id: freeze
+        name: Freeze approved release configuration
+        env:
+          TRUSTED_SITE_COMMIT: ${{ vars.TRUSTED_SITE_COMMIT }}
+          TRUSTED_VERIFIER_SHA256: ${{ vars.TRUSTED_VERIFIER_SHA256 }}
+          TRUSTED_FREEZER_SHA256: ${{ vars.TRUSTED_FREEZER_SHA256 }}
+          EXPECTED_BROWSER_HASHES_JSON: ${{ vars.EXPECTED_BROWSER_HASHES_JSON }}
+          EXPECTED_METADATA_HASHES_JSON: ${{ vars.EXPECTED_METADATA_HASHES_JSON }}
+          TRUSTED_EVIDENCE_JSON: ${{ vars.TRUSTED_EVIDENCE_JSON }}
+          TRUSTED_APPROVAL_JSON: ${{ vars.TRUSTED_APPROVAL_JSON }}
+          OBSERVED_SITE_COMMIT: ${{ steps.site.outputs.sha }}
+          HC_RELEASE_REPOSITORY: ${{ github.repository }}
+          HC_RELEASE_REF: ${{ github.ref }}
+          HC_RELEASE_EVENT: ${{ github.event_name }}
+          HC_RELEASE_RUN_ID: ${{ github.run_id }}
+          HC_RELEASE_RUN_ATTEMPT: ${{ github.run_attempt }}
+          HC_RELEASE_WORKFLOW_COMMIT: ${{ github.sha }}
+        run: python -B control/.github/scripts/freeze_release.py --freeze --checkout control
+      - name: Summarize frozen release identity
+        env:
+          SITE_COMMIT: ${{ steps.freeze.outputs.approved_site_commit }}
+          RELEASE_DIGEST: ${{ steps.freeze.outputs.frozen_release_sha256 }}
+        run: printf 'Approved site commit: %s\nRelease record digest: %s\n' "$SITE_COMMIT" "$RELEASE_DIGEST" >> "$GITHUB_STEP_SUMMARY"
+
+  publish:
+    if: ${{ false }}
+    needs: freeze
+    name: Publish site release (${{ needs.freeze.outputs.digest }})
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # locally inspected v7 pin; verify owner/version before activation
+        with:
+          ref: ${{ needs.freeze.outputs.site_commit }}
+          path: candidate
+          persist-credentials: false
+      - id: site
+        name: Record the candidate checkout commit
+        run: echo "sha=$(git -C candidate rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Verify approved helpers before staging
+        env:
+          BOOTSTRAP_CHECKOUT: candidate
+          APPROVED_VERIFIER_SHA256: ${{ needs.freeze.outputs.verifier_sha256 }}
+          APPROVED_FREEZER_SHA256: ${{ needs.freeze.outputs.freezer_sha256 }}
+        run: >-
+          python -B -c 'import hashlib,os,pathlib,re,stat,sys; root=pathlib.Path(os.environ["BOOTSTRAP_CHECKOUT"]); checks=((".github/scripts/verify_release.py","APPROVED_VERIFIER_SHA256"),(".github/scripts/freeze_release.py","APPROVED_FREEZER_SHA256")); regular=lambda p: stat.S_ISREG(p.lstat().st_mode) if p.exists() or p.is_symlink() else False; ok=all(re.fullmatch(r"[0-9a-f]{64}",os.environ.get(key,"")) is not None and regular(root/name) and hashlib.sha256((root/name).read_bytes()).hexdigest()==os.environ.get(key) for name,key in checks); sys.exit(0 if ok else "release helper bytes do not match independently approved hashes")'
+      - id: stage
+        name: Validate the frozen release and stage browser files
+        env:
+          FROZEN_RELEASE_JSON: ${{ needs.freeze.outputs.payload }}
+          FROZEN_RELEASE_SHA256: ${{ needs.freeze.outputs.digest }}
+          APPROVED_VERIFIER_SHA256: ${{ needs.freeze.outputs.verifier_sha256 }}
+          APPROVED_FREEZER_SHA256: ${{ needs.freeze.outputs.freezer_sha256 }}
+          OBSERVED_SITE_COMMIT: ${{ steps.site.outputs.sha }}
+          HC_RELEASE_REPOSITORY: ${{ github.repository }}
+          HC_RELEASE_REF: ${{ github.ref }}
+          HC_RELEASE_EVENT: ${{ github.event_name }}
+          HC_RELEASE_RUN_ID: ${{ github.run_id }}
+          HC_RELEASE_RUN_ATTEMPT: ${{ github.run_attempt }}
+          HC_RELEASE_WORKFLOW_COMMIT: ${{ github.sha }}
+        run: python -B candidate/.github/scripts/freeze_release.py --validate-frozen --checkout candidate --destination upload-site
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # locally inspected v5 pin; verify owner/version before activation
+      - name: Verify approved helpers before final validation
+        env:
+          BOOTSTRAP_CHECKOUT: candidate
+          APPROVED_VERIFIER_SHA256: ${{ needs.freeze.outputs.verifier_sha256 }}
+          APPROVED_FREEZER_SHA256: ${{ needs.freeze.outputs.freezer_sha256 }}
+        run: >-
+          python -B -c 'import hashlib,os,pathlib,re,stat,sys; root=pathlib.Path(os.environ["BOOTSTRAP_CHECKOUT"]); checks=((".github/scripts/verify_release.py","APPROVED_VERIFIER_SHA256"),(".github/scripts/freeze_release.py","APPROVED_FREEZER_SHA256")); regular=lambda p: stat.S_ISREG(p.lstat().st_mode) if p.exists() or p.is_symlink() else False; ok=all(re.fullmatch(r"[0-9a-f]{64}",os.environ.get(key,"")) is not None and regular(root/name) and hashlib.sha256((root/name).read_bytes()).hexdigest()==os.environ.get(key) for name,key in checks); sys.exit(0 if ok else "release helper bytes do not match independently approved hashes")'
+      - name: Revalidate the staged browser directory immediately before upload
+        env:
+          FROZEN_RELEASE_JSON: ${{ needs.freeze.outputs.payload }}
+          FROZEN_RELEASE_SHA256: ${{ needs.freeze.outputs.digest }}
+          APPROVED_VERIFIER_SHA256: ${{ needs.freeze.outputs.verifier_sha256 }}
+          APPROVED_FREEZER_SHA256: ${{ needs.freeze.outputs.freezer_sha256 }}
+          OBSERVED_SITE_COMMIT: ${{ steps.site.outputs.sha }}
+          HC_RELEASE_REPOSITORY: ${{ github.repository }}
+          HC_RELEASE_REF: ${{ github.ref }}
+          HC_RELEASE_EVENT: ${{ github.event_name }}
+          HC_RELEASE_RUN_ID: ${{ github.run_id }}
+          HC_RELEASE_RUN_ATTEMPT: ${{ github.run_attempt }}
+          HC_RELEASE_WORKFLOW_COMMIT: ${{ github.sha }}
+        run: python -B candidate/.github/scripts/freeze_release.py --validate-frozen --checkout candidate --destination upload-site --validate-only
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # locally inspected v5 pin; verify owner/version before activation
+        with:
+          path: upload-site
+      - uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # locally inspected v5 pin; verify owner/version before activation
+        id: deployment

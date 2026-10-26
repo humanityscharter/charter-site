@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "charter_commit": "e3c5fcf7a9b5d9d13da61aa410c595c3d09fd9e4",
+  "build_revision": "6a8ee16d05147d2efa9bb263e0d897dd8dffee31",
+  "built_at_utc": "2026-10-26T16:51:11.480730Z",
+  "files": {
+    "00-how-to-propose-an-amendment.md": "c4f4495a7d5494663956bfe9b38f369a88fb4555221408352864e49921197949",
+    "api-config.js": "d922912e29ad2518df23d6bce4eac07da7b0edf62c7435329632dec4a96490af",
+    "app.js": "6e93c461ac46eba67e11878cdd569f6bab733bb7fe4d7224b9d7a39010994fe1",
+    "charter-data.js": "bf9086d5c17865a5b65f983e820af6482b1602ffa5d6e424a1949c9cd336a923",
+    "CODE_OF_CONDUCT.md": "0a2d939664e085358e447fe08268b8f71315089de32e7839c1637d6eff1cdc5d",
+    "CONTRIBUTING.md": "d9d35abb4ab7b517812b39e758f52904b2f6acb93575d0e26ef01a5fd3d4cbd5",
+    "favicon.png": "dc7619fd429c0b19e1c7b14e83655e095fc5cdef10524d4484aa77ea224d48ab",
+    "GOVERNANCE.md": "a4b48e2ded267260cf37446d7d4b596aea6e6c88e95eb57349cc332c7800c72b",
+    "index.html": "d7d42c9b05f87682cdbd54a2f0b2cad8ed8665b2e64aa768043aa7156eb143e4",
+    "LICENSE-CHARTER.md": "abdac5a9bc9a1db8219545ec16535e02d60cd8f452d7f5c1e56d344bd8fb4dd6",
+    "LICENSE-CODE.md": "31fdf5b6d1c4e0b8cae92af186305912455914068288374703960a9bc83ab71f",
+    "logo.png": "92dda85e9d96536d67459e087e9b55d81b212facaa070928e629ff7d5b55f504",
+    "markdown-renderer.js": "033db9862bc6ef10d4a1cf549bda40382ad02e340da87d3650d73b8e57b4e93f",
+    "proposal-client.js": "fa296503955aa4c4b358480653db223de507f29bc74527736e5202327c87ae02",
+    "PROPOSALS.md": "6f587c7a85e2435695dbc3e8397a831ad90deec434e316186b6c6dd30d67f20b",
+    "reaction-client.js": "b3546e0d956f7d5825c52d7cc4099b14db3935e42c6c47e7cdc9382ac1676a20",
+    "reaction-view.js": "6525a8e99863d7f59893ce1fe1f250dd8d97857db96d2ff3ca8f7832eeacd33d",
+    "SETTLED.md": "f496219e38908f4d235dd3f1fe86ba38370c310f4364ed54e8e51c544986acd8",
+    "style.css": "0c58f2933be1d1c7e6e40340c03572acc75a71b380356fe66f065cc4139cf77d"
+  }
+}
