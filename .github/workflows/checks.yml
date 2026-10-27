@@ -21,3 +21,30 @@ jobs:
           persist-credentials: false
       - name: Check exact site candidate
         run: python -B .github/scripts/verify_release.py --check-candidate --checkout .
+
+  runtime_observation:
+    name: Publisher runtime observation (no publishing)
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' && github.repository == 'humanityscharter/charter-site' && github.event.pull_request.head.repo.full_name == 'humanityscharter/charter-site' && github.event.pull_request.base.ref == 'main' && github.event.pull_request.base.sha == '3f4c62aba673d761dd95bbc34929daf06201adfa' && github.head_ref == format('codex/publisher-runtime-readiness-{0}', github.event.pull_request.head.sha) && github.run_attempt == 1 }}
+    runs-on: ubuntu-24.04
+    permissions: {}
+    timeout-minutes: 3
+    steps:
+      - name: Record only the preinstalled runtime identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = pull_request
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          test "$RUNNER_OS" = Linux
+          test "$RUNNER_ARCH" = X64
+          test "$ImageOS" = ubuntu24
+          test -n "$ImageVersion"
+          printf 'run_id=%s\nrun_attempt=%s\nrunner_os=%s\nrunner_arch=%s\nimage_os=%s\nimage_version=%s\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$RUNNER_OS" "$RUNNER_ARCH" "$ImageOS" "$ImageVersion"
+          python_path="$(readlink -f "$(command -v python)")"
+          node_path="$(readlink -f "$(command -v node)")"
+          test -f "$python_path" && test -x "$python_path"
+          test -f "$node_path" && test -x "$node_path"
+          printf 'python_path=%s\nnode_path=%s\n' "$python_path" "$node_path"
+          "$python_path" -I -B -c 'import platform, sys; print("python_version=" + platform.python_version()); print("python_sys_executable=" + sys.executable)'
+          "$node_path" --version
+          sha256sum -- "$python_path" "$node_path"
