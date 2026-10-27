@@ -5,6 +5,7 @@ on:
     branches: [main]
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions: {}
 
@@ -21,3 +22,78 @@ jobs:
           persist-credentials: false
       - name: Check exact site candidate
         run: python -B .github/scripts/verify_release.py --check-candidate --checkout .
+
+  probe_outside_before:
+    name: "Approval probe: probe outside before"
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: site_boundary
+    runs-on: ubuntu-latest
+    permissions: {}
+    timeout-minutes: 5
+    steps:
+      - name: Check probe outside before sentinel
+        env:
+          PROBE_OBSERVED: ${{ vars.HC_APPROVAL_PROBE_V1_SENTINEL }}
+        run: |-
+          if [ -z "$PROBE_OBSERVED" ]; then
+            printf '%s\n' 'HC_APPROVAL_PROBE_OUTSIDE_BEFORE_EMPTY_PASS'
+          else
+            printf '%s\n' 'HC_APPROVAL_PROBE_OUTSIDE_BEFORE_EMPTY_MISMATCH'
+            exit 1
+          fi
+  probe_release_review:
+    name: "Approval probe: probe release review"
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: probe_outside_before
+    runs-on: ubuntu-latest
+    permissions: {}
+    timeout-minutes: 5
+    environment: release-approval
+    steps:
+      - name: Check probe release review sentinel
+        env:
+          PROBE_OBSERVED: ${{ vars.HC_APPROVAL_PROBE_V1_SENTINEL }}
+        run: |-
+          if [ "$PROBE_OBSERVED" = "hc-approval-probe-release-20261026-v1" ]; then
+            printf '%s\n' 'HC_APPROVAL_PROBE_RELEASE_REVIEW_VALUE_PASS'
+          else
+            printf '%s\n' 'HC_APPROVAL_PROBE_RELEASE_REVIEW_VALUE_MISMATCH'
+            exit 1
+          fi
+  probe_pages_review:
+    name: "Approval probe: probe pages review"
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: probe_outside_before
+    runs-on: ubuntu-latest
+    permissions: {}
+    timeout-minutes: 5
+    environment: github-pages
+    steps:
+      - name: Check probe pages review sentinel
+        env:
+          PROBE_OBSERVED: ${{ vars.HC_APPROVAL_PROBE_V1_SENTINEL }}
+        run: |-
+          if [ "$PROBE_OBSERVED" = "hc-approval-probe-pages-20261026-v1" ]; then
+            printf '%s\n' 'HC_APPROVAL_PROBE_PAGES_REVIEW_VALUE_PASS'
+          else
+            printf '%s\n' 'HC_APPROVAL_PROBE_PAGES_REVIEW_VALUE_MISMATCH'
+            exit 1
+          fi
+  probe_outside_after:
+    name: "Approval probe: probe outside after"
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: [probe_release_review, probe_pages_review]
+    runs-on: ubuntu-latest
+    permissions: {}
+    timeout-minutes: 5
+    steps:
+      - name: Check probe outside after sentinel
+        env:
+          PROBE_OBSERVED: ${{ vars.HC_APPROVAL_PROBE_V1_SENTINEL }}
+        run: |-
+          if [ -z "$PROBE_OBSERVED" ]; then
+            printf '%s\n' 'HC_APPROVAL_PROBE_OUTSIDE_AFTER_EMPTY_PASS'
+          else
+            printf '%s\n' 'HC_APPROVAL_PROBE_OUTSIDE_AFTER_EMPTY_MISMATCH'
+            exit 1
+          fi
