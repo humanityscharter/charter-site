@@ -11,6 +11,8 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
+    environment:
+      name: release-approval
     outputs:
       payload: ${{ steps.freeze.outputs.frozen_release_json }}
       digest: ${{ steps.freeze.outputs.frozen_release_sha256 }}
@@ -29,20 +31,20 @@ jobs:
       - name: Verify approved helpers before freezing
         env:
           BOOTSTRAP_CHECKOUT: control
-          APPROVED_VERIFIER_SHA256: ${{ vars.TRUSTED_VERIFIER_SHA256 }}
-          APPROVED_FREEZER_SHA256: ${{ vars.TRUSTED_FREEZER_SHA256 }}
+          APPROVED_VERIFIER_SHA256: ${{ vars.HC_RELEASE_V1_VERIFIER_SHA256 }}
+          APPROVED_FREEZER_SHA256: ${{ vars.HC_RELEASE_V1_FREEZER_SHA256 }}
         run: >-
           python -B -c 'import hashlib,os,pathlib,re,stat,sys; root=pathlib.Path(os.environ["BOOTSTRAP_CHECKOUT"]); checks=((".github/scripts/verify_release.py","APPROVED_VERIFIER_SHA256"),(".github/scripts/freeze_release.py","APPROVED_FREEZER_SHA256")); regular=lambda p: stat.S_ISREG(p.lstat().st_mode) if p.exists() or p.is_symlink() else False; ok=all(re.fullmatch(r"[0-9a-f]{64}",os.environ.get(key,"")) is not None and regular(root/name) and hashlib.sha256((root/name).read_bytes()).hexdigest()==os.environ.get(key) for name,key in checks); sys.exit(0 if ok else "release helper bytes do not match independently approved hashes")'
       - id: freeze
         name: Freeze approved release configuration
         env:
-          TRUSTED_SITE_COMMIT: ${{ vars.TRUSTED_SITE_COMMIT }}
-          TRUSTED_VERIFIER_SHA256: ${{ vars.TRUSTED_VERIFIER_SHA256 }}
-          TRUSTED_FREEZER_SHA256: ${{ vars.TRUSTED_FREEZER_SHA256 }}
-          EXPECTED_BROWSER_HASHES_JSON: ${{ vars.EXPECTED_BROWSER_HASHES_JSON }}
-          EXPECTED_METADATA_HASHES_JSON: ${{ vars.EXPECTED_METADATA_HASHES_JSON }}
-          TRUSTED_EVIDENCE_JSON: ${{ vars.TRUSTED_EVIDENCE_JSON }}
-          TRUSTED_APPROVAL_JSON: ${{ vars.TRUSTED_APPROVAL_JSON }}
+          TRUSTED_SITE_COMMIT: ${{ vars.HC_RELEASE_V1_SITE_COMMIT }}
+          TRUSTED_VERIFIER_SHA256: ${{ vars.HC_RELEASE_V1_VERIFIER_SHA256 }}
+          TRUSTED_FREEZER_SHA256: ${{ vars.HC_RELEASE_V1_FREEZER_SHA256 }}
+          EXPECTED_BROWSER_HASHES_JSON: ${{ vars.HC_RELEASE_V1_BROWSER_HASHES_JSON }}
+          EXPECTED_METADATA_HASHES_JSON: ${{ vars.HC_RELEASE_V1_METADATA_HASHES_JSON }}
+          TRUSTED_EVIDENCE_JSON: ${{ vars.HC_RELEASE_V1_EVIDENCE_JSON }}
+          TRUSTED_APPROVAL_JSON: ${{ vars.HC_RELEASE_V1_APPROVAL_JSON }}
           OBSERVED_SITE_COMMIT: ${{ steps.site.outputs.sha }}
           HC_RELEASE_REPOSITORY: ${{ github.repository }}
           HC_RELEASE_REF: ${{ github.ref }}
