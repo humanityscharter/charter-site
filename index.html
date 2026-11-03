@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.humanityscharter.org https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <title>Humanity's Charter: An abundance framework for what comes next</title>
+  <meta name="description" content="A public draft and proposed 30-year roadmap for material abundance with AI and robotics. Read, question, debate, and help improve the Charter.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand-link">
+        <img src="logo.png" alt="Humanity's Charter Logo" class="brand-logo-img">
+        <span class="brand-text-title">Humanity's Charter</span>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="#about" data-hc-action="open-sincerity">Sincerity</a></li>
+          <li><a href="#spine">The Foundation</a></li>
+          <li><a href="#systems">8 Systems</a></li>
+          <li><a href="#directory">Chapters</a></li>
+          <li><a href="#appendices">Appendices</a></li>
+          <li><a href="#appendix-appendix-energy-fission-eroei-calculation">Energy</a></li>
+          <li><a href="#governance">Governance</a></li>
+          <li><a href="#propose">Propose</a></li>
+          <li class="mobile-nav-cta"><a href="#front-matter" class="btn btn-primary btn-sm" data-hc-action="open-front-matter" style="color:#fff!important;width:100%;justify-content:center;">Read Charter</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn btn-icon" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">☾</button>
+        <a href="#front-matter" class="btn btn-primary btn-sm header-read-btn" data-hc-action="open-front-matter">Read Charter</a>
+        <button id="mobile-menu-toggle" class="btn btn-icon mobile-menu-btn" title="Open Navigation Menu" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="pulse"></span>
+        <span>Version 0.1 (Draft) • Open for Global Debate</span>
+      </div>
+
+      <h1 class="hero-title">A Framework for What Comes Next</h1>
+      <p class="hero-tagline">
+        Open to everyone, shaped through debate, and built together. An optimistic, practical public draft and proposed 30-year roadmap for human abundance in the age of AI and robotics.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg" data-hc-action="open-front-matter">
+          Read the Charter &rarr;
+        </button>
+        <a href="#directory" class="btn btn-subtle">
+          Directory of 26 Chapters
+        </a>
+      </div>
+
+      <!-- Sincerity Callout Box -->
+      <div class="sincerity-card">
+        <div class="sincerity-header">
+          <span class="sincerity-badge">Founding Commitment</span>
+          <span style="font-size:0.85rem;color:var(--text-muted)">March 2026</span>
+        </div>
+        <p class="sincerity-quote">
+          Excerpts from the founder’s statement: "I don't have all the answers. That's the point. […] I say “could” with urgency because most people alive today live in a high-scarcity environment. Rent is due on the first of the month. They might have medical debt, and they are exhausted from working one 12-hour shift 5 or 6 days a week, or 2 to 3 part-time jobs. […] My goal is a world where machines perform the work of survival so we can actually live. […] What follows is a starting position to focus our entire effort. It is one proposal among many, written down so you have something real to push against. I do not offer it as scripture or "This is the way." I offer it as a direction."
+        </p>
+        <div class="sincerity-author">
+          <span>Humanity&rsquo;s Charter</span>
+          <a href="#about" data-hc-action="open-sincerity" style="font-size:0.85rem;font-weight:600">Read Full Statement &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Spine Section (Settled Core) -->
+  <section id="spine" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">&sect; 1.0 Founder's Proposed Floor</div>
+        <h2>The Foundation of the Charter</h2>
+        <p>The founder puts forward these three commitments as a starting floor for debate.</p>
+      </div>
+
+      <div class="spine-grid">
+        <div class="spine-card">
+          <div class="spine-num">Principle 01</div>
+          <h3>Liberate Instead of Displace</h3>
+          <p>
+            The gains of automation must reach the people whose labor, knowledge, and lives built them. We reject techno-feudalism where a few monopolize compute while the many are economically discarded.
+          </p>
+          <span class="spine-badge">Proposed Floor Standard</span>
+        </div>
+
+        <div class="spine-card">
+          <div class="spine-num">Principle 02</div>
+          <h3>A Generation-Scale Goal</h3>
+          <p>
+            We should work toward abundance within a generation. This proposal sets an ambitious 30-year roadmap with draft targets and milestones across legal, physical, and local/regional domains. Progress depends on evidence, democratic decisions, and local readiness; Year 30 is a planning horizon, not a promised endpoint.
+          </p>
+          <span class="spine-badge">Proposed 30-Year Goal</span>
+        </div>
+
+        <div class="spine-card">
+          <div class="spine-num">Principle 03</div>
+          <h3>Universal Global Equity</h3>
+          <p>
+            The transition cannot belong to Silicon Valley or wealthy nation states alone. People across languages, regions, and disciplines should help shape the transition from the start.
+          </p>
+          <span class="spine-badge">Global Access Mandate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Eight Systems Explorer -->
+  <section id="systems" class="section" style="background:var(--bg-surface-elevated);border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">&sect; 2.0 System Architecture</div>
+        <h2>The Eight Systems of Abundance</h2>
+        <p>The Charter treats material scarcity largely as a problem of system design. It proposes eight interdependent systems for shared abundance.</p>
+        <p>Ecological sustainability is a binding cross-cutting boundary for all eight systems.</p>
+      </div>
+
+      <div class="systems-grid" id="systems-container">
+        <!-- Injected via app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- All 26 Chapters Directory -->
+  <section id="directory" class="directory-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">&sect; 3.0 Living Draft</div>
+        <h2>The Complete Charter (26 Chapters)</h2>
+        <p>Explore any chapter in Chapter Summary mode (3 min) or the Complete Full Chapter.</p>
+        <p>The recurring Chen family is fictional: Maria is an artist and VR creator, David is a civic mediator and human-systems facilitator, and Leo and Sam are curious learners. Their setting is intentionally unnamed; their 2047 day is one possible future for their local community. Dates, occupations, jurisdictions, resource access, and policy wins in named vignettes are possible scenarios, not roadmap commitments.</p>
+        
+        <button class="btn btn-secondary btn-sm" data-hc-action="open-front-matter">Front Matter / How to Read</button>
+        <div style="max-width:520px;margin:20px auto 0;">
+          <input type="text" id="chapter-search" class="form-input" aria-label="Search chapters and appendices" placeholder="Filter articles, mechanisms, and appendices (e.g. UBR, energy, sortition)...">
+        </div>
+      </div>
+
+      <div id="directory-container">
+        <!-- Injected via app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Appendices & Technical Reference Section -->
+  <section id="appendices" class="section" style="background:var(--bg-surface-elevated);border-bottom:1px solid var(--border-subtle)">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag" style="color:var(--brand-olive)">&sect; 4.0 Research & Reference</div>
+        <h2>Appendices & Technical Frameworks</h2>
+        <p>Mathematical energy cost derivations, global case studies, nuclear EROEI calculations, FAQ matrices, and the comprehensive glossary.</p>
+      </div>
+
+      <div class="appendices-grid" id="appendices-container">
+        <!-- Injected via app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- How We Decide & Governance -->
+  <section id="governance" class="section">
+    <div class="container container-narrow">
+      <div class="section-header">
+        <div class="section-tag">&sect; 5.0 Deliberative Mechanism</div>
+        <h2>Open to everyone, shaped through debate, and built together.</h2>
+        <p>How the Charter changes is open for discussion and development. <a href="https://discord.gg/tBrZFgs23K" target="_blank" rel="noopener">Discord is the temporary Governance Incubator</a> for Forum discussion and live debate. The permanent governance and voting platform has not been decided, and no binding amendment vote is open. Discord polls and chapter reactions are advisory, not binding votes. GitHub stores Charter documents and their change history only.</p>
+      </div>
+
+      <div class="spine-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));margin-bottom:30px;">
+        <div class="spine-card">
+          <h4 style="color:var(--brand-olive);margin-bottom:8px">1. Proposed Foundation</h4>
+          <p style="font-size:0.9rem">The Foundation is the founder's proposal, not a ratified or locked core. The community can debate and shape it.</p>
+        </div>
+        <div class="spine-card">
+          <h4 style="color:var(--brand-terracotta);margin-bottom:8px">2. Proposal Tier</h4>
+          <p style="font-size:0.9rem">Ideas across all 26 chapters are open for debate and revision. Anyone may propose an amendment or counter-proposal.</p>
+        </div>
+        <div class="spine-card">
+          <h4 style="color:var(--brand-gold);margin-bottom:8px">3. Open Questions</h4>
+          <p style="font-size:0.9rem">Unanswered questions and design gaps. A position can be brought forward for discussion as a proposal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Propose an Amendment Form -->
+  <section id="propose" class="section" style="background:var(--bg-surface-elevated);border-top:1px solid var(--border-subtle);">
+    <div class="container container-narrow">
+      <div class="section-header">
+        <div class="section-tag">&sect; 6.0 Share a Proposal Idea</div>
+        <h2>Suggest a Change</h2>
+        <p>No software engineering skills needed. Submit a serious idea for private human review without creating an account. A reviewer may manually post a redacted proposal to Discord when it is useful for discussion. A submission is not a vote, public post, or approved amendment.</p>
+      </div>
+
+      <noscript>
+        <p class="proposal-unavailable">Proposal submission and receipt lookup require JavaScript and are unavailable until it is enabled. You can contact hello@humanityscharter.org for help.</p>
+      </noscript>
+
+      <div class="form-card">
+        <form id="proposal-form-el">
+          <fieldset id="proposal-fields" class="proposal-fields" disabled>
+          <div class="form-row">
+            <label for="prop-name">Your Name or Alias *</label>
+            <input id="prop-name" name="name" type="text" class="form-input" placeholder="e.g. Jordan River" minlength="1" maxlength="80" autocomplete="name" required>
+          </div>
+
+          <div class="form-row">
+            <label for="prop-email">Email address (optional, for private follow-up)</label>
+            <input id="prop-email" name="email" type="email" class="form-input" placeholder="you@domain.com" maxlength="254" autocomplete="email" aria-describedby="proposal-email-note">
+            <p id="proposal-email-note" class="form-help">Keep your receipt to check status here. An email address is stored only when you ask for private follow-up.</p>
+          </div>
+
+          <div class="proposal-consent">
+            <input id="prop-contact-requested" name="contactRequested" type="checkbox">
+            <label for="prop-contact-requested">Humanity's Charter may contact me privately about this proposal using the email address above.</label>
+          </div>
+
+          <div class="form-row">
+            <label for="proposal-chapter">Target Chapter *</label>
+            <select id="proposal-chapter" name="chapter" class="form-select" required>
+              <!-- Injected via app.js -->
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="prop-type">Proposal Type *</label>
+            <select id="prop-type" name="type" class="form-select" required>
+              <option value="Text Amendment">Text Amendment (Clarify or modify specific clause)</option>
+              <option value="Counter-Proposal">Counter-Proposal (Replace an existing mechanism)</option>
+              <option value="New Section">New Section (Address an unhandled challenge)</option>
+              <option value="Open Question">Open Question (Raise an unanswered dilemma)</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="prop-summary">Proposed Change *</label>
+            <textarea id="prop-summary" name="proposedChange" class="form-textarea" rows="6" placeholder="Clearly describe what you propose changing or adding..." minlength="20" maxlength="4000" required></textarea>
+            <p class="form-help">20–4,000 characters.</p>
+          </div>
+
+          <div class="form-row">
+            <label for="prop-rationale">Rationale & Supporting Evidence</label>
+            <textarea id="prop-rationale" name="rationale" class="form-textarea" rows="4" placeholder="Why does this proposal improve the Charter? Cite sources or historical precedents if available." maxlength="8000"></textarea>
+          </div>
+
+          <div class="proposal-honeypot" aria-hidden="true">
+            <label for="proposal-website">Leave this field empty</label>
+            <input id="proposal-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="proposal-consent">
+            <input id="prop-consent" name="consent" type="checkbox" required>
+            <label for="prop-consent">I understand this submission is not a vote. Humanity's Charter may publish my proposal and name or alias for public debate. If I provide an email address, it will remain private.</label>
+          </div>
+
+          <p class="proposal-privacy">Your proposal is stored privately for review. Your name or alias, optional email address, original proposal, rationale, and private reviewer notes are deleted from the active proposal database when a final review decision is recorded.</p>
+
+          <p class="proposal-privacy">Unresolved submissions have a seven-day private-data retention limit. Automated cleanup may close review up to an hour early. If a storage failure prevents deletion, private review and new submissions remain unavailable until cleanup is verified.</p>
+
+          <p class="proposal-privacy">Deleted information may remain temporarily in restricted system-recovery history before automatically expiring. After a backup restore, original private submissions and private notes from that backup are removed before private review or new submissions resume. Receipt and status information, a redacted public proposal, and a discussion link may remain. For privacy or contact requests, email hello@humanityscharter.org.</p>
+
+          <div id="proposal-turnstile" class="proposal-turnstile" data-action="proposal_submit" aria-label="Human verification"></div>
+
+          <button id="proposal-submit" type="submit" class="btn btn-primary proposal-submit">
+            Submit for Review
+          </button>
+          </fieldset>
+          <div id="proposal-challenge-status" class="proposal-status proposal-status-error" role="status" aria-live="polite">Proposal submission and receipt lookup are unavailable until secure setup completes.</div>
+        </form>
+
+        <div id="proposal-status" class="proposal-status" role="status" aria-live="polite"></div>
+
+        <section id="proposal-receipt" class="proposal-receipt" aria-labelledby="proposal-receipt-title" hidden>
+          <h3 id="proposal-receipt-title">Save this receipt</h3>
+          <p class="proposal-receipt-value" id="proposal-receipt-value"></p>
+          <p class="proposal-receipt-meta">Receipt displayed <span id="proposal-receipt-date"></span></p>
+          <p>Keep this receipt somewhere safe. You need it to check status here.</p>
+          <div class="proposal-receipt-actions">
+            <button id="proposal-copy-receipt" type="button" class="btn btn-secondary btn-sm">Copy receipt</button>
+            <button id="proposal-download-receipt" type="button" class="btn btn-secondary btn-sm">Download receipt</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="proposal-lookup">
+        <h3>Check a receipt</h3>
+        <p>Use the receipt from a previous submission to see its coarse review status. Proposal text and private contact details are never shown here.</p>
+        <form id="proposal-lookup-form" class="proposal-lookup-form">
+          <fieldset id="proposal-lookup-fields" class="proposal-lookup-fields" disabled>
+          <div class="form-row">
+            <label for="proposal-lookup-receipt">Receipt</label>
+            <input id="proposal-lookup-receipt" name="receipt" type="text" class="form-input" placeholder="HC-P-…" pattern="HC-P-[A-Z2-7]{52}" autocomplete="off" required>
+          </div>
+          <button id="proposal-lookup-submit" type="submit" class="btn btn-secondary">Check status</button>
+          </fieldset>
+        </form>
+        <div id="proposal-lookup-result" class="proposal-lookup-result" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reader Modal Overlay -->
+  <div id="reader-overlay" class="modal-backdrop">
+    <div class="reader-container" role="dialog" aria-modal="true" aria-labelledby="reader-modal-title" tabindex="-1">
+      <div class="reader-topbar">
+        <div class="title" id="reader-modal-title">Chapter Reader</div>
+        <button class="btn-icon" data-hc-action="close-reader" title="Close Reader" aria-label="Close Reader">✕</button>
+      </div>
+      <div class="reader-content">
+        <div id="reader-tabs-container" class="reader-tabs"></div>
+        <div id="reader-body-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sincerity Statement Modal Overlay -->
+  <div id="sincerity-overlay" class="modal-backdrop">
+    <div class="reader-container" style="max-width:760px;">
+      <div class="reader-topbar">
+        <div class="title">Founder's Sincerity Statement</div>
+        <button class="btn-icon" data-hc-action="close-sincerity" title="Close" aria-label="Close sincerity statement">✕</button>
+      </div>
+      <div class="reader-content" id="sincerity-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-cols">
+        <div>
+          <h4 style="margin-bottom:10px">Humanity's Charter</h4>
+          <p style="font-size:0.9rem;color:var(--text-secondary);max-width:320px;">
+            A global open-source proposal for shared abundance in the age of AI and robotics.
+          </p>
+          <div style="font-size:0.85rem;color:var(--brand-terracotta);font-weight:600">
+            hello@humanityscharter.org
+          </div>
+        </div>
+
+        <div>
+          <h4 style="margin-bottom:10px">Framework</h4>
+          <ul style="list-style:none;font-size:0.9rem;line-height:2">
+            <li><a href="#spine">Proposed Foundation</a></li>
+            <li><a href="#systems">The 8 Systems</a></li>
+            <li><a href="#directory">26 Chapters</a></li>
+            <li><a href="#governance">Governance & Tiers</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="margin-bottom:10px">Participation</h4>
+          <ul style="list-style:none;font-size:0.9rem;line-height:2">
+            <li><a href="#propose">Propose an Amendment</a></li>
+            <li><a href="#about" data-hc-action="open-sincerity">Sincerity Statement</a></li>
+            <li><a href="https://discord.gg/tBrZFgs23K" target="_blank" rel="noopener">Discord Governance Incubator</a></li>
+            <li><a href="https://github.com/humanityscharter/charter" target="_blank" rel="noopener">GitHub Repository</a></li>
+            <li>Contact: hello@humanityscharter.org</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-copy">
+        Charter text and public explanatory writing are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)</a>. Site code is licensed under MIT. Built for all humanity.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="charter-data.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
